@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: illuwabang
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/illuwabang
+    username: root
+    password: 6030
+
+  jpa:
+    #database-platform: org.hibernate.dialect.MariaDBDialect #자동생성 사용
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true #To beautify or pretty print the SQL
+        show_sql: true #show sql
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: ${KAKAO_CLIENT}
+            client-secret: ${KAKAO_SECRET}
+            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            client-authentication-method: post
+            authorization-grant-type: authorization_code
+            scope:
+              - profile_nickname
+              - profile_image
+              - account_email
+            client-name: kakao
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+logging:
+  level:
+    org.hibernate:
+      SQL: debug
+      type: trace
+
+# ??? ????
+kakao:
+  client_id: e6d0bdc9bcbafaf3442ca214d97e8a84
+  redirect_uri: http://localhost:8080/login/oauth2/code/kakao

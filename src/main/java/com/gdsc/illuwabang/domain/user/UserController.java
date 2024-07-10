@@ -1,4 +1,4 @@
-package com.gdsc.illuwabang.User;
+package com.gdsc.illuwabang.domain.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

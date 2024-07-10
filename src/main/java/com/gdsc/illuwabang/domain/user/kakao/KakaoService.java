@@ -1,4 +1,4 @@
-package com.gdsc.illuwabang.User.Kakao;
+package com.gdsc.illuwabang.domain.user.kakao;
 
 import io.netty.handler.codec.http.HttpHeaderValues;
 import lombok.RequiredArgsConstructor;

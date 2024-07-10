@@ -1,4 +1,4 @@
-package com.gdsc.illuwabang.Config;
+package com.gdsc.illuwabang.global.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

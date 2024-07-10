@@ -1,4 +1,4 @@
-package com.gdsc.illuwabang.User;
+package com.gdsc.illuwabang.domain.user;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

@@ -1,4 +1,4 @@
-package com.gdsc.illuwabang.User.Kakao;
+package com.gdsc.illuwabang.domain.user.kakao;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

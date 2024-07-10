@@ -1,4 +1,4 @@
-package com.gdsc.illuwabang.User.Kakao;
+package com.gdsc.illuwabang.domain.user.kakao;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
