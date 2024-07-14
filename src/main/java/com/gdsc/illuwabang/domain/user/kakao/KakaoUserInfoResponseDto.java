@@ -13,20 +13,19 @@ import java.util.HashMap;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class KakaoUserInfoResponseDto {
 
-    //회원 번호
+    //sub
     @JsonProperty("id")
-    public Long id;
+    public String id;
 
-    //자동 연결 설정을 비활성화한 경우만 존재.
-    //true : 연결 상태, false : 연결 대기 상태
+    //연결상태
     @JsonProperty("has_signed_up")
     public Boolean hasSignedUp;
 
-    //서비스에 연결 완료된 시각. UTC
+    //서비스에 연결 완료된 시간
     @JsonProperty("connected_at")
     public Date connectedAt;
 
-    //카카오싱크 간편가입을 통해 로그인한 시각. UTC
+    //카카오싱크 간편가입을 통해 로그인한 시간
     @JsonProperty("synched_at")
     public Date synchedAt;
 
