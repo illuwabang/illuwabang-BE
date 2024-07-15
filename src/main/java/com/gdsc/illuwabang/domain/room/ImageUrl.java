@@ -11,7 +11,7 @@ import java.util.UUID;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ToString
 public class ImageUrl {
-    private String thumnail;
+    private String thumbnail;
     private String image1;
     private String image2;
     private String image3;
