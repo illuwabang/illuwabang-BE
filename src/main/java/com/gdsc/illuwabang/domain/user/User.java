@@ -2,6 +2,7 @@ package com.gdsc.illuwabang.domain.user;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,10 +19,20 @@ public class User {
 
     private String name;
 
-    private String e_mail;
+    private String email;
 
-    private String provider;
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
 
     private String image;
+
+    @Builder
+    public User(String sub, String name, String email, Provider provider, String image) {
+        this.sub = sub;
+        this.name = name;
+        this.email = email;
+        this.provider = provider;
+        this.image = image;
+    }
 
 }

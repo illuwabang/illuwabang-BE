@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>KakaoLogin</title>
+    <title>Login</title>
 </head>
 <body>
 <div class="container" style="display: flex; justify-content: center; align-content: center; align-items: center; flex-direction: column; margin: 200px auto; ">
-    <h1>카카오 로그인</h1>
-    <a th:href="${location}">
-        <img src="/kakao_login_medium_narrow.png" >
+    <h1>Login</h1>
+    <a th:href="${kakaoLocation}">
+        <img src="/kakao_login_medium_narrow.png" alt="Kakao Login">
     </a>
+    <a th:href="${googleLocation}">Google Login</a>
 </div>
 </body>
 </html>
