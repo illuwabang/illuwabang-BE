@@ -3,6 +3,7 @@ package com.gdsc.illuwabang.domain.room.repository;
 import com.gdsc.illuwabang.domain.room.ImageUrl;
 import com.gdsc.illuwabang.domain.room.Room;
 import com.gdsc.illuwabang.domain.room.RoomRepository;
+import com.gdsc.illuwabang.domain.room.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,12 +44,13 @@ class RoomRepositoryTest {
                 .imageUrl(imageUrl)
                 .roadAddress("Sample Road Address")
                 .detailAddress("Sample Detail Address")
-                .latitude(37.1234f)
-                .longitude(127.5678f)
-                .startDate(LocalTime.of(9, 0))
-                .endDate(LocalTime.of(18, 0))
-                .createdAt(LocalTime.now())
-                .updatedAt(LocalTime.now())
+                .state(State.AVAILABLE)
+                .latitude(37.1234d)
+                .longitude(127.5678d)
+                .startDate(LocalDateTime.of(2024,7,21,9, 0))
+                .endDate(LocalDateTime.of(2024,7,23,10, 0))
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .build();
 
         // When
