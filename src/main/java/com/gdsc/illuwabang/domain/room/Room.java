@@ -68,8 +68,9 @@ public class Room {
     @Column
     private String detailAddress;
 
+    @Enumerated(EnumType.STRING)
     @Column
-    private Float latitude;
+    private State state;
 
     @Column
     private Double latitude;
