@@ -2,20 +2,17 @@ package com.gdsc.illuwabang.domain.room;
 
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.Type;
 import org.hibernate.type.SqlTypes;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
 @Entity
-@Data
+@Getter
 @Table(name = "room")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Room {
@@ -23,6 +20,10 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
+
+    //foreign key
+    @Column
+    private Long userId;
 
     @Column
     private String title;
@@ -71,22 +72,30 @@ public class Room {
     private Float latitude;
 
     @Column
-    private Float longitude;
+    private Double latitude;
 
     @Column
-    private LocalTime startDate;
+    private Double longitude;
 
     @Column
-    private LocalTime endDate;
+    private LocalDateTime startDate;
 
     @Column
-    private LocalTime createdAt;
+    private LocalDateTime endDate;
 
     @Column
-    private LocalTime updatedAt;
+    private LocalDateTime createdAt;
+
+    @Column
+    private LocalDateTime updatedAt;
 
     @Builder
-    public Room(String title, String content, String type, Integer deposit, Integer rent, Integer maintenanceCost, String options, String floor, String buildingInfo, Float size, ImageUrl imageUrl, String roadAddress, String detailAddress, Float latitude, Float longitude, LocalTime startDate, LocalTime endDate, LocalTime createdAt, LocalTime updatedAt) {
+    public Room(Long  userId,String title, String content, String type,
+                Integer deposit, Integer rent, Integer maintenanceCost,
+                String options, String floor, String buildingInfo, Float size,
+                ImageUrl imageUrl, String roadAddress, String detailAddress, State state,
+                Double latitude, Double longitude, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.userId = userId;
         this.title = title;
         this.content = content;
         this.type = type;
@@ -100,6 +109,7 @@ public class Room {
         this.imageUrl = imageUrl;
         this.roadAddress = roadAddress;
         this.detailAddress = detailAddress;
+        this.state = state;
         this.latitude = latitude;
         this.longitude = longitude;
         this.startDate = startDate;
