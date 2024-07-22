@@ -44,4 +44,10 @@ public class RoomController {
 
         return ResponseEntity.ok().body(roomService.registerRoom(userId, roomInfo));
     }
+
+    @GetMapping("/{roomId}")
+    public ResponseEntity<SelectRoomResponseDto> getRoomInfo(@PathVariable Long roomId) {
+        SelectRoomResponseDto roomInfo = roomService.getRoomInfo(roomId);
+        return ResponseEntity.ok().body(roomInfo);
+    }
 }

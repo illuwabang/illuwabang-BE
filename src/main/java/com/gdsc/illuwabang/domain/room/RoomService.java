@@ -1,8 +1,11 @@
 package com.gdsc.illuwabang.domain.room;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gdsc.illuwabang.domain.room.dto.RoomRegisterDto;
-import com.gdsc.illuwabang.domain.room.dto.RoomResponseDto;
+import com.gdsc.illuwabang.domain.room.dto.AllRoomResponseDto;
+import com.gdsc.illuwabang.domain.room.dto.SelectRoomResponseDto;
+import com.gdsc.illuwabang.domain.user.User;
+import com.gdsc.illuwabang.domain.user.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -24,15 +28,18 @@ public class RoomService {
     @Autowired
     RoomRepository roomRepository;
 
+    @Autowired
+    UserRepository userRepository;
 
-    public List<RoomResponseDto> getAllRooms() {
+
+    public List<AllRoomResponseDto> getAllRooms() {
         return roomRepository.findAll().stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
-    private RoomResponseDto convertToDto(Room room) {
-        RoomResponseDto roomResponseDto = new RoomResponseDto();
+    private AllRoomResponseDto convertToDto(Room room) {
+        AllRoomResponseDto allRoomResponseDto = new AllRoomResponseDto();
 
         String thumbnail = "";
         if (room.getImageUrl() != null) {
@@ -41,27 +48,73 @@ public class RoomService {
             thumbnail = "room_default.png";
         }
 
-        roomResponseDto.setRoomId(room.getId());
-        roomResponseDto.setType(room.getType());
-        roomResponseDto.setDeposit(room.getDeposit());
-        roomResponseDto.setRent(room.getRent());
-        roomResponseDto.setRoadAddress(room.getRoadAddress());
-        roomResponseDto.setFloor(room.getFloor());
-        roomResponseDto.setStartDate(room.getStartDate().toString());
-        roomResponseDto.setEndDate(room.getEndDate().toString());
-        roomResponseDto.setState(room.getState());
-        roomResponseDto.setLatitude(room.getLatitude());
-        roomResponseDto.setLongitude(room.getLongitude());
+        allRoomResponseDto.setRoomId(room.getId());
+        allRoomResponseDto.setType(room.getType());
+        allRoomResponseDto.setDeposit(room.getDeposit());
+        allRoomResponseDto.setRent(room.getRent());
+        allRoomResponseDto.setRoadAddress(room.getRoadAddress());
+        allRoomResponseDto.setFloor(room.getFloor());
+        allRoomResponseDto.setStartDate(room.getStartDate().toString());
+        allRoomResponseDto.setEndDate(room.getEndDate().toString());
+        allRoomResponseDto.setState(room.getState());
+        allRoomResponseDto.setLatitude(room.getLatitude());
+        allRoomResponseDto.setLongitude(room.getLongitude());
 
-        return roomResponseDto;
+        return allRoomResponseDto;
     }
 
     public Object registerRoom(Long userId, RoomRegisterDto roomInfo) {
         roomInfo.setUserId(userId);
         roomInfo.setCreatedAt(LocalDateTime.now());
+        roomInfo.setState(State.AVAILABLE);
+        //임시 좌표
+        roomInfo.setLatitude(0.0);
+        roomInfo.setLongitude(0.0);
+
 
         Room room = roomInfo.toEntity();
 
         return roomRepository.save(room);
+    }
+
+    public SelectRoomResponseDto getRoomInfo(Long roomId) {
+        Room room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new EntityNotFoundException("Room not found with id: " + roomId));;
+
+        User user = userRepository.findById(room.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + room.getUserId()));
+
+        // RoomDto 생성 및 설정
+        SelectRoomResponseDto roomDto = new SelectRoomResponseDto();
+        roomDto.setRoomId(room.getId());
+        roomDto.setTitle(room.getTitle());
+        roomDto.setContent(room.getContent());
+        roomDto.setDeposit(room.getDeposit());
+        roomDto.setRent(room.getRent());
+        roomDto.setMaintenanceCost(room.getMaintenanceCost());
+        roomDto.setSize(room.getSize());
+        roomDto.setFloor(room.getFloor());
+        roomDto.setBuildingInfo(room.getBuildingInfo());
+        roomDto.setState(room.getState().toString());
+//        roomDto.setBookmarkNumber(room.getBookmarkNumber());
+        roomDto.setOptions(Arrays.asList(room.getOptions().split(",")));
+        roomDto.setRoadAddress(room.getRoadAddress());
+        roomDto.setLatitude(room.getLatitude());
+        roomDto.setLongitude(room.getLongitude());
+        //null check
+        if (room.getImageUrl() != null) {
+            roomDto.setImages(room.getImageUrl().getUrls());
+        } else {
+            roomDto.setImages(Collections.emptyList());
+        }
+
+        // TransferorInfo 설정
+        SelectRoomResponseDto.TransferorInfo transferorInfo = new SelectRoomResponseDto.TransferorInfo();
+        transferorInfo.setUserId(user.getId());
+        transferorInfo.setName(user.getName());
+        transferorInfo.setProfileImg(user.getImage());
+        roomDto.setTransferorInfo(transferorInfo);
+
+        return roomDto;
     }
 }
