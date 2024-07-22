@@ -1,6 +1,7 @@
 package com.gdsc.illuwabang.domain.room;
 
 import com.gdsc.illuwabang.domain.room.dto.RoomRegisterDto;
+import com.gdsc.illuwabang.domain.room.dto.SelectRoomResponseDto;
 import com.gdsc.illuwabang.domain.user.User;
 import com.gdsc.illuwabang.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/rooms")
 @RequiredArgsConstructor
 public class RoomController {
 
@@ -26,11 +27,11 @@ public class RoomController {
 
     @ResponseBody
     @GetMapping("/allRooms")
-    public ResponseEntity<?> getAllRooms(Authentication authentication) {
+    public ResponseEntity<?> getAllRooms() {
         return ResponseEntity.ok().body(roomService.getAllRooms());
     }
 
-    @PostMapping("/rooms/register")
+    @PostMapping("/register")
     public ResponseEntity<?> registerRoom(Authentication authentication, @RequestBody RoomRegisterDto roomInfo) {
         Long userId = 0L;
         Optional<User> exist_user = userService.findBySub(authentication.getName());
@@ -40,6 +41,7 @@ public class RoomController {
         } else {
             return ResponseEntity.badRequest().body("User not found");
         }
+
         return ResponseEntity.ok().body(roomService.registerRoom(userId, roomInfo));
     }
 }
