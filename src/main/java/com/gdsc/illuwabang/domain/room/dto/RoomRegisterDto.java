@@ -20,6 +20,7 @@ public class RoomRegisterDto {
     private Integer deposit;
     private Integer rent;
     private Integer maintenanceCost;
+    private String floor;
     private String options;
     private ImageUrl images;
     private String roadAddress;
@@ -29,7 +30,6 @@ public class RoomRegisterDto {
     private State state;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private String floor;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String buildingInfo;

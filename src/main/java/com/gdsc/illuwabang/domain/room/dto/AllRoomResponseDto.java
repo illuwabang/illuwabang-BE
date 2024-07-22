@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RoomResponseDto {
+public class AllRoomResponseDto {
     private Long roomId;
     private String thumbnail;
     private String type;
