@@ -52,7 +52,7 @@ public class RoomController {
     }
 
     @PatchMapping("/{roomId}")
-    public ResponseEntity<?> updateRoomInfo(@PathVariable Long roomId, @RequestBody RoomRegisterDto roomInfo) {
+    public ResponseEntity<Room> updateRoomInfo(@PathVariable Long roomId, @RequestBody RoomRegisterDto roomInfo) {
         return ResponseEntity.ok().body(roomService.updateRoomInfo(roomId, roomInfo));
     }
 }

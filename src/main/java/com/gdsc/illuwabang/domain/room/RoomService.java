@@ -118,7 +118,7 @@ public class RoomService {
         return roomDto;
     }
 
-    public Object updateRoomInfo(Long roomId, RoomRegisterDto inputRoomInfo) {
+    public Room updateRoomInfo(Long roomId, RoomRegisterDto inputRoomInfo) {
         Room originalRoom = roomRepository.findById(roomId)
                 .orElseThrow(() -> new EntityNotFoundException("Room not found with id: " + roomId));
 
