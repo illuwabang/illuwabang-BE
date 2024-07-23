@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -148,5 +145,16 @@ public class RoomService {
                 .build();
 
         return roomRepository.save(newRoom);
+    }
+
+    public Map deleteRoom(Long roomId) {
+        Room room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new EntityNotFoundException("Room not found with id: " + roomId));
+
+        roomRepository.delete(room);
+
+        Map<String, String> stringStringMap = new HashMap<>();
+        stringStringMap.put("status", "success");
+        return stringStringMap;
     }
 }

@@ -55,4 +55,9 @@ public class RoomController {
     public ResponseEntity<Room> updateRoomInfo(@PathVariable Long roomId, @RequestBody RoomRegisterDto roomInfo) {
         return ResponseEntity.ok().body(roomService.updateRoomInfo(roomId, roomInfo));
     }
+
+    @DeleteMapping("/{roomId}")
+    public ResponseEntity<Object> deleteRoom(@PathVariable Long roomId) {
+        return ResponseEntity.ok().body(roomService.deleteRoom(roomId));
+    }
 }
