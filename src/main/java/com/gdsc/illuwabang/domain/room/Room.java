@@ -4,7 +4,6 @@ import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.Type;
 import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
@@ -91,7 +90,37 @@ public class Room {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Room(Long  userId,String title, String content, String type,
+    public Room(Long id, Long userId,String title, String content, Type type,
+                Integer deposit, Integer rent, Integer maintenanceCost,
+                String options, String floor, String buildingInfo, Float size,
+                ImageUrl imageUrl, String roadAddress, String detailAddress, State state,
+                Double latitude, Double longitude, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.userId = userId;
+        this.title = title;
+        this.content = content;
+        this.type = type;
+        this.deposit = deposit;
+        this.rent = rent;
+        this.maintenanceCost = maintenanceCost;
+        this.options = options;
+        this.floor = floor;
+        this.buildingInfo = buildingInfo;
+        this.size = size;
+        this.imageUrl = imageUrl;
+        this.roadAddress = roadAddress;
+        this.detailAddress = detailAddress;
+        this.state = state;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    @Builder
+    public Room(Long userId,String title, String content, Type type,
                 Integer deposit, Integer rent, Integer maintenanceCost,
                 String options, String floor, String buildingInfo, Float size,
                 ImageUrl imageUrl, String roadAddress, String detailAddress, State state,
