@@ -50,4 +50,9 @@ public class RoomController {
         SelectRoomResponseDto roomInfo = roomService.getRoomInfo(roomId);
         return ResponseEntity.ok().body(roomInfo);
     }
+
+    @PatchMapping("/{roomId}")
+    public ResponseEntity<?> updateRoomInfo(@PathVariable Long roomId, @RequestBody RoomRegisterDto roomInfo) {
+        return ResponseEntity.ok().body(roomService.updateRoomInfo(roomId, roomInfo));
+    }
 }

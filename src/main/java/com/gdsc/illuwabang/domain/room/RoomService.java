@@ -67,7 +67,7 @@ public class RoomService {
         roomInfo.setUserId(userId);
         roomInfo.setCreatedAt(LocalDateTime.now());
         roomInfo.setState(State.AVAILABLE);
-        //임시 좌표
+        //임시 좌표 //좌표 설정 필요
         roomInfo.setLatitude(0.0);
         roomInfo.setLongitude(0.0);
 
@@ -116,5 +116,37 @@ public class RoomService {
         roomDto.setTransferorInfo(transferorInfo);
 
         return roomDto;
+    }
+
+    public Object updateRoomInfo(Long roomId, RoomRegisterDto inputRoomInfo) {
+        Room originalRoom = roomRepository.findById(roomId)
+                .orElseThrow(() -> new EntityNotFoundException("Room not found with id: " + roomId));
+
+        Room newRoom = Room.builder()
+                .id(originalRoom.getId())
+                .userId(originalRoom.getUserId())
+                .title(inputRoomInfo.getTitle() == null ? originalRoom.getTitle() : inputRoomInfo.getTitle())
+                .content(inputRoomInfo.getContent() == null ? originalRoom.getContent() : inputRoomInfo.getContent())
+                .type(inputRoomInfo.getType() == null ? originalRoom.getType() : inputRoomInfo.getType())
+                .deposit(inputRoomInfo.getDeposit() == null ? originalRoom.getDeposit() : inputRoomInfo.getDeposit())
+                .rent(inputRoomInfo.getRent() == null ? originalRoom.getRent() : inputRoomInfo.getRent())
+                .maintenanceCost(inputRoomInfo.getMaintenanceCost() == null ? originalRoom.getMaintenanceCost() : inputRoomInfo.getMaintenanceCost())
+                .options(inputRoomInfo.getOptions() == null ? originalRoom.getOptions() : inputRoomInfo.getOptions())
+                .floor(inputRoomInfo.getFloor() == null ? originalRoom.getFloor() : inputRoomInfo.getFloor())
+                .buildingInfo(inputRoomInfo.getBuildingInfo() == null ? originalRoom.getBuildingInfo() : inputRoomInfo.getBuildingInfo())
+                .size(inputRoomInfo.getSize() == null ? originalRoom.getSize() : inputRoomInfo.getSize())
+                .imageUrl(inputRoomInfo.getImages() == null ? originalRoom.getImageUrl() : inputRoomInfo.getImages())
+                .roadAddress(inputRoomInfo.getRoadAddress() == null ? originalRoom.getRoadAddress() : inputRoomInfo.getRoadAddress())
+                .detailAddress(inputRoomInfo.getDetailAddress() == null ? originalRoom.getDetailAddress() : inputRoomInfo.getDetailAddress())
+                .state(inputRoomInfo.getState() == null ? originalRoom.getState() : inputRoomInfo.getState())
+                .latitude(inputRoomInfo.getLatitude() == null ? originalRoom.getLatitude() : inputRoomInfo.getLatitude())
+                .longitude(inputRoomInfo.getLongitude() == null ? originalRoom.getLongitude() : inputRoomInfo.getLongitude())
+                .startDate(inputRoomInfo.getStartDate() == null ? originalRoom.getStartDate() : inputRoomInfo.getStartDate())
+                .endDate(inputRoomInfo.getEndDate() == null ? originalRoom.getEndDate() : inputRoomInfo.getEndDate())
+                .createdAt(originalRoom.getCreatedAt())
+                .updatedAt(LocalDateTime.now())
+                .build();
+
+        return roomRepository.save(newRoom);
     }
 }
