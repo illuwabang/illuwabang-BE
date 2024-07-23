@@ -31,9 +31,9 @@ public class Room {
     @Column
     private String content;
 
-//    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     @Column
-    private String type;
+    private Type type;
 
     @Column
     private Integer deposit;

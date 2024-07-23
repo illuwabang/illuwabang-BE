@@ -1,9 +1,6 @@
 package com.gdsc.illuwabang.domain.room.repository;
 
-import com.gdsc.illuwabang.domain.room.ImageUrl;
-import com.gdsc.illuwabang.domain.room.Room;
-import com.gdsc.illuwabang.domain.room.RoomRepository;
-import com.gdsc.illuwabang.domain.room.State;
+import com.gdsc.illuwabang.domain.room.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +30,7 @@ class RoomRepositoryTest {
         Room room = Room.builder()
                 .title("Sample Title")
                 .content("Sample Content")
-                .type("Sample Type")
+                .type(Type.ONE_ROOM)
                 .deposit(1000)
                 .rent(500)
                 .maintenanceCost(50)

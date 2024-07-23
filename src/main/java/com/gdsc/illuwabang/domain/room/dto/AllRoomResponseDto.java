@@ -1,6 +1,7 @@
 package com.gdsc.illuwabang.domain.room.dto;
 
 import com.gdsc.illuwabang.domain.room.State;
+import com.gdsc.illuwabang.domain.room.Type;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +10,7 @@ import lombok.Setter;
 public class AllRoomResponseDto {
     private Long roomId;
     private String thumbnail;
-    private String type;
+    private Type type;
     private Integer deposit;
     private Integer rent;
     private String roadAddress;

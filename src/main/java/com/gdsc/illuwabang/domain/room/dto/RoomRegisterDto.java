@@ -3,6 +3,7 @@ package com.gdsc.illuwabang.domain.room.dto;
 import com.gdsc.illuwabang.domain.room.ImageUrl;
 import com.gdsc.illuwabang.domain.room.Room;
 import com.gdsc.illuwabang.domain.room.State;
+import com.gdsc.illuwabang.domain.room.Type;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +17,7 @@ public class RoomRegisterDto {
     private Long userId;
     private String title;
     private String content;
-    private String type;
+    private Type type;
     private Integer deposit;
     private Integer rent;
     private Integer maintenanceCost;
