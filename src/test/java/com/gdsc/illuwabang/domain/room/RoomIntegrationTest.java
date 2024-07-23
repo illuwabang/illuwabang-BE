@@ -21,8 +21,7 @@ import java.time.LocalDateTime;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -74,15 +73,13 @@ public class RoomIntegrationTest {
         roomRegisterDto.setUserId(1L);
         roomRegisterDto.setTitle("Test Room");
         roomRegisterDto.setContent("Test Content");
-        roomRegisterDto.setType("Single");
+        roomRegisterDto.setType(Type.ONE_ROOM);
         roomRegisterDto.setDeposit(1000);
         roomRegisterDto.setRent(500);
         roomRegisterDto.setMaintenanceCost(50);
         roomRegisterDto.setOptions("Option1");
         roomRegisterDto.setRoadAddress("123 Main St");
-        roomRegisterDto.setDetailAddress("Apt 1");
-        roomRegisterDto.setLatitude(37.12345123);
-        roomRegisterDto.setLongitude(-121.12345d);
+        roomRegisterDto.setDetailAddress("Apt 12");
         roomRegisterDto.setState(State.AVAILABLE);
         roomRegisterDto.setStartDate(LocalDateTime.of(2024,3,21,19, 1));
         roomRegisterDto.setEndDate(LocalDateTime.of(2024,3,23,20, 2));
@@ -100,18 +97,35 @@ public class RoomIntegrationTest {
                 .andExpect(jsonPath("$.title", is("Test Room")));
 
         // 방 정보 가져오기
-        mockMvc.perform(get("/api/allRooms"))
+        mockMvc.perform(get("/api/rooms/allRooms"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].type", is("Single")))
+                .andExpect(jsonPath("$[0].type", is("ONE_ROOM")))
                 .andExpect(jsonPath("$[0].deposit", is(1000)))
                 .andExpect(jsonPath("$[0].rent", is(500)))
                 .andExpect(jsonPath("$[0].roadAddress", is("123 Main St")))
                 .andExpect(jsonPath("$[0].floor", is("2nd")))
                 .andExpect(jsonPath("$[0].startDate", is("2024-03-21T19:01")))
                 .andExpect(jsonPath("$[0].endDate", is("2024-03-23T20:02")))
-                .andExpect(jsonPath("$[0].state", is("AVAILABLE")))
-                .andExpect(jsonPath("$[0].latitude", is(37.12345123)))
-                .andExpect(jsonPath("$[0].longitude", is(-121.12345)));
+                .andExpect(jsonPath("$[0].state", is("AVAILABLE")));
+
+
+        roomRegisterDto = new RoomRegisterDto();
+        roomRegisterDto.setUserId(1L);
+        roomRegisterDto.setTitle("Change Room");
+        roomRegisterDto.setContent("Change Content");
+        roomRegisterDto.setState(State.SOLD);
+
+
+        mockMvc.perform(patch("/api/rooms/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(roomRegisterDto))
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", is("Change Room")))
+                .andExpect(jsonPath("$.content", is("Change Content")))
+                .andExpect(jsonPath("$.state", is("SOLD")));
+
+
     }
 }
