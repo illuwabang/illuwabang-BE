@@ -127,5 +127,11 @@ public class RoomIntegrationTest {
                 .andExpect(jsonPath("$.state", is("SOLD")));
 
 
+        mockMvc.perform(delete("/api/rooms/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(roomRegisterDto))
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status", is("success")));
     }
 }
