@@ -23,7 +23,7 @@ public class RoomRegisterDto {
     private Integer maintenanceCost;
     private String floor;
     private String options;
-    private ImageUrl images;
+    private ImageUrl imageUrl;
     private String roadAddress;
     private String detailAddress;
     private Double latitude;
@@ -46,7 +46,7 @@ public class RoomRegisterDto {
                 .rent(rent)
                 .maintenanceCost(maintenanceCost)
                 .options(options)
-                .imageUrl(images)
+                .imageUrl(imageUrl)
                 .roadAddress(roadAddress)
                 .detailAddress(detailAddress)
                 .latitude(latitude)

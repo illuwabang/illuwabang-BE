@@ -60,7 +60,7 @@ public class RoomService {
         return allRoomResponseDto;
     }
 
-    public Object registerRoom(Long userId, RoomRegisterDto roomInfo) {
+    public Room registerRoom(Long userId, RoomRegisterDto roomInfo) {
         roomInfo.setUserId(userId);
         roomInfo.setCreatedAt(LocalDateTime.now());
         roomInfo.setState(State.AVAILABLE);
@@ -132,7 +132,7 @@ public class RoomService {
                 .floor(inputRoomInfo.getFloor() == null ? originalRoom.getFloor() : inputRoomInfo.getFloor())
                 .buildingInfo(inputRoomInfo.getBuildingInfo() == null ? originalRoom.getBuildingInfo() : inputRoomInfo.getBuildingInfo())
                 .size(inputRoomInfo.getSize() == null ? originalRoom.getSize() : inputRoomInfo.getSize())
-                .imageUrl(inputRoomInfo.getImages() == null ? originalRoom.getImageUrl() : inputRoomInfo.getImages())
+                .imageUrl(inputRoomInfo.getImageUrl() == null ? originalRoom.getImageUrl() : inputRoomInfo.getImageUrl())
                 .roadAddress(inputRoomInfo.getRoadAddress() == null ? originalRoom.getRoadAddress() : inputRoomInfo.getRoadAddress())
                 .detailAddress(inputRoomInfo.getDetailAddress() == null ? originalRoom.getDetailAddress() : inputRoomInfo.getDetailAddress())
                 .state(inputRoomInfo.getState() == null ? originalRoom.getState() : inputRoomInfo.getState())
