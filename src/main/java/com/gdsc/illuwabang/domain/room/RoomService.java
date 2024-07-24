@@ -29,6 +29,11 @@ public class RoomService {
     UserRepository userRepository;
 
 
+    public Room findRoomById(Long roomId) {
+        return roomRepository.findById(roomId)
+                .orElseThrow(() -> new EntityNotFoundException("Room not found with id: " + roomId));
+    }
+
     public List<AllRoomResponseDto> getAllRooms() {
         return roomRepository.findAll().stream()
                 .map(this::convertToDto)
