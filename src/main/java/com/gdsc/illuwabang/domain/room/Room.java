@@ -1,5 +1,6 @@
 package com.gdsc.illuwabang.domain.room;
 
+import com.gdsc.illuwabang.domain.user.User;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -10,7 +11,8 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.Type;
 import org.hibernate.type.SqlTypes;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -23,6 +25,10 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User userId;
 
     @Column
     private String title;
@@ -74,20 +80,21 @@ public class Room {
     private Float longitude;
 
     @Column
-    private LocalTime startDate;
+    private LocalDateTime startDate;
 
     @Column
-    private LocalTime endDate;
+    private LocalDateTime endDate;
 
     @Column
-    private LocalTime createdAt;
+    private LocalDateTime createdAt;
 
     @Column
-    private LocalTime updatedAt;
+    private LocalDateTime updatedAt;
 
     @Builder
-    public Room(String title, String content, String type, Integer deposit, Integer rent, Integer maintenanceCost, String options, String floor, String buildingInfo, Float size, ImageUrl imageUrl, String roadAddress, String detailAddress, Float latitude, Float longitude, LocalTime startDate, LocalTime endDate, LocalTime createdAt, LocalTime updatedAt) {
+    public Room(String title, User user, String content, String type, Integer deposit, Integer rent, Integer maintenanceCost, String options, String floor, String buildingInfo, Float size, ImageUrl imageUrl, String roadAddress, String detailAddress, Float latitude, Float longitude, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.title = title;
+        this.userId = user;
         this.content = content;
         this.type = type;
         this.deposit = deposit;

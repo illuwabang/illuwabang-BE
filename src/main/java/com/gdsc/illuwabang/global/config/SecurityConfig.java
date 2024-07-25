@@ -34,7 +34,7 @@ public class SecurityConfig {
         http
                 .csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/", "/signUp", "/signUp_try", "/login", "/login_try", "/api/login/oauth2/kakao","/api/login/oauth2/google").permitAll()
+                        .requestMatchers("/", "/api/login/oauth2/kakao","/api/login/oauth2/google").permitAll()
                         .anyRequest().authenticated()
 
                 )

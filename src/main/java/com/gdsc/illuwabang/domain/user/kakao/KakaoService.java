@@ -35,7 +35,7 @@ public class KakaoService {
     public String getAccessTokenFromKakao(String code) {
         KakaoTokenResponseDto kakaoTokenResponseDto = WebClient.create(KAUTH_TOKEN_URL_HOST).post()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/oauth/token")
+                        .path("/oauth/token") // 토큰 요청하는 url
                         .queryParam("grant_type", "authorization_code")
                         .queryParam("client_id", clientId)
                         .queryParam("client_secret", clientSecret)
