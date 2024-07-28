@@ -33,7 +33,7 @@ public class MessageController {
         }
     }
 
-    @PostMapping("/api/message/send/{roomId}/")
+    @PostMapping("/api/message/send/{roomId}")
     public ResponseEntity<?> sendRoomMessage(Authentication authentication, @PathVariable Long roomId, @RequestBody ContentDto contentDto){
         Optional<User> exist_user = userService.findBySub(authentication.getName());
         System.out.println("hello");
