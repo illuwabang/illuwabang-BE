@@ -2,6 +2,9 @@ package com.gdsc.illuwabang.domain.room;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gdsc.illuwabang.domain.room.dto.RoomRegisterDto;
+import com.gdsc.illuwabang.domain.room.enums.State;
+import com.gdsc.illuwabang.domain.room.enums.Type;
+import com.gdsc.illuwabang.domain.room.repository.RoomRepository;
 import com.gdsc.illuwabang.domain.user.Provider;
 import com.gdsc.illuwabang.domain.user.User;
 import com.gdsc.illuwabang.domain.user.UserRepository;
@@ -104,7 +107,32 @@ public class RoomIntegrationTest {
                 .andExpect(jsonPath("$[0].deposit", is(1000)))
                 .andExpect(jsonPath("$[0].rent", is(500)))
                 .andExpect(jsonPath("$[0].roadAddress", is("123 Main St")))
-                .andExpect(jsonPath("$[0].floor", is("2nd")))
+                .andExpect(jsonPath("$[0].floor", is("2")))
+                .andExpect(jsonPath("$[0].startDate", is("2024-03-21T19:01")))
+                .andExpect(jsonPath("$[0].endDate", is("2024-03-23T20:02")))
+                .andExpect(jsonPath("$[0].state", is("AVAILABLE")));
+
+
+        // 방 검색
+        mockMvc.perform(get("/api/rooms/search")
+                        .param("type", "ONE_ROOM")
+                        .param("depositMin", "500")
+                        .param("depositMax", "1500")
+                        .param("rentMin", "200")
+                        .param("rentMax", "700")
+                        .param("sizeMin", "30.0")
+                        .param("sizeMax", "60.0")
+                        .param("isBasement", "false")
+                        .param("isGround", "true")
+                        .param("isRooftop", "false")
+                        .param("options", "Option1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].type", is("ONE_ROOM")))
+                .andExpect(jsonPath("$[0].deposit", is(1000)))
+                .andExpect(jsonPath("$[0].rent", is(500)))
+                .andExpect(jsonPath("$[0].roadAddress", is("123 Main St")))
+                .andExpect(jsonPath("$[0].floor", is("2")))
                 .andExpect(jsonPath("$[0].startDate", is("2024-03-21T19:01")))
                 .andExpect(jsonPath("$[0].endDate", is("2024-03-23T20:02")))
                 .andExpect(jsonPath("$[0].state", is("AVAILABLE")));
