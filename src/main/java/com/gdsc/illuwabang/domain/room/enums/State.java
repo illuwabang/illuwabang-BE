@@ -1,4 +1,4 @@
-package com.gdsc.illuwabang.domain.room;
+package com.gdsc.illuwabang.domain.room.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
