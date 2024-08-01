@@ -1,13 +1,12 @@
 package com.gdsc.illuwabang.domain.bookmark;
 
 import com.gdsc.illuwabang.domain.room.Room;
-import com.gdsc.illuwabang.domain.room.RoomRepository;
+import com.gdsc.illuwabang.domain.room.repository.RoomRepository;
 import com.gdsc.illuwabang.domain.room.RoomService;
-import com.gdsc.illuwabang.domain.room.Type;
+import com.gdsc.illuwabang.domain.room.enums.Type;
 import com.gdsc.illuwabang.domain.user.User;
 import com.gdsc.illuwabang.domain.user.UserRepository;
 import com.gdsc.illuwabang.domain.user.UserService;
-import org.hibernate.Hibernate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -70,6 +69,7 @@ public class BookmarkIntegrationTest {
                 .content("Test Content")
                 .userId(1L)
                 .deposit(1000)
+                .floor(3)
                 .type(Type.ONE_ROOM)
                 .rent(500)
                 .roadAddress("Test Address")
