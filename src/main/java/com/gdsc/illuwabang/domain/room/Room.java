@@ -1,13 +1,13 @@
 package com.gdsc.illuwabang.domain.room;
 
-import io.hypersistence.utils.hibernate.type.json.JsonType;
+import com.gdsc.illuwabang.domain.room.enums.State;
+import com.gdsc.illuwabang.domain.room.enums.Type;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 
 @Entity
@@ -49,7 +49,7 @@ public class Room {
 
 //    @Enumerated(EnumType.STRING)
     @Column
-    private String floor;
+    private Integer floor;
 
     @Column
     private String buildingInfo;
@@ -92,7 +92,7 @@ public class Room {
     @Builder
     public Room(Long id, Long userId,String title, String content, Type type,
                 Integer deposit, Integer rent, Integer maintenanceCost,
-                String options, String floor, String buildingInfo, Float size,
+                String options, Integer floor, String buildingInfo, Float size,
                 ImageUrl imageUrl, String roadAddress, String detailAddress, State state,
                 Double latitude, Double longitude, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
@@ -122,7 +122,7 @@ public class Room {
     @Builder
     public Room(Long userId,String title, String content, Type type,
                 Integer deposit, Integer rent, Integer maintenanceCost,
-                String options, String floor, String buildingInfo, Float size,
+                String options, Integer floor, String buildingInfo, Float size,
                 ImageUrl imageUrl, String roadAddress, String detailAddress, State state,
                 Double latitude, Double longitude, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.userId = userId;

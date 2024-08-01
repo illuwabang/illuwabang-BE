@@ -83,7 +83,7 @@ public class RoomIntegrationTest {
         roomRegisterDto.setState(State.AVAILABLE);
         roomRegisterDto.setStartDate(LocalDateTime.of(2024,3,21,19, 1));
         roomRegisterDto.setEndDate(LocalDateTime.of(2024,3,23,20, 2));
-        roomRegisterDto.setFloor("2nd");
+        roomRegisterDto.setFloor("2");
         roomRegisterDto.setCreatedAt(LocalDateTime.now());
         roomRegisterDto.setUpdatedAt(LocalDateTime.now());
         roomRegisterDto.setBuildingInfo("Building Info");

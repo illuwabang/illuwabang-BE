@@ -2,15 +2,12 @@ package com.gdsc.illuwabang.domain.room.dto;
 
 import com.gdsc.illuwabang.domain.room.ImageUrl;
 import com.gdsc.illuwabang.domain.room.Room;
-import com.gdsc.illuwabang.domain.room.State;
-import com.gdsc.illuwabang.domain.room.Type;
-import lombok.AllArgsConstructor;
+import com.gdsc.illuwabang.domain.room.enums.State;
+import com.gdsc.illuwabang.domain.room.enums.Type;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
 
 @Getter @Setter
 public class RoomRegisterDto {
@@ -37,6 +34,16 @@ public class RoomRegisterDto {
     private Float size;
 
     public Room toEntity() {
+        //문자열 층수 => 숫자 층수
+        Integer parsedFloor = 0;
+        if (this.floor.equals("basement")) {
+            parsedFloor = -1;
+        } else if (this.floor.equals("rooftop")) {
+            parsedFloor = 100;
+        } else {
+            parsedFloor = Integer.parseInt(this.floor);
+        }
+
         return Room.builder()
                 .userId(userId)
                 .title(title)
@@ -54,7 +61,7 @@ public class RoomRegisterDto {
                 .state(state)
                 .startDate(startDate)
                 .endDate(endDate)
-                .floor(floor)
+                .floor(parsedFloor)
                 .createdAt(createdAt)
                 .updatedAt(updatedAt)
                 .buildingInfo(buildingInfo)

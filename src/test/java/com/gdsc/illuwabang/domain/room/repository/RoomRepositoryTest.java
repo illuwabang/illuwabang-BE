@@ -1,6 +1,8 @@
 package com.gdsc.illuwabang.domain.room.repository;
 
 import com.gdsc.illuwabang.domain.room.*;
+import com.gdsc.illuwabang.domain.room.enums.State;
+import com.gdsc.illuwabang.domain.room.enums.Type;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,7 +36,7 @@ class RoomRepositoryTest {
                 .rent(500)
                 .maintenanceCost(50)
                 .options("Sample Options")
-                .floor("1")
+                .floor(1)
                 .buildingInfo("Sample Building Info")
                 .size(45.5f)
                 .imageUrl(imageUrl)
