@@ -1,12 +1,14 @@
 package com.gdsc.illuwabang.domain.room.dto;
 
-import com.gdsc.illuwabang.domain.room.State;
-import com.gdsc.illuwabang.domain.room.Type;
-import lombok.Getter;
-import lombok.Setter;
+import com.gdsc.illuwabang.domain.room.Room;
+import com.gdsc.illuwabang.domain.room.enums.State;
+import com.gdsc.illuwabang.domain.room.enums.Type;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AllRoomResponseDto {
     private Long roomId;
     private String thumbnail;
@@ -20,4 +22,42 @@ public class AllRoomResponseDto {
     private State state;
     private Double latitude;
     private Double longitude;
+
+
+    public static AllRoomResponseDto of (Room room) {
+        AllRoomResponseDto allRoomResponseDto = new AllRoomResponseDto();
+
+        String thumbnail = "";
+        if (room.getImageUrl() != null) {
+            thumbnail = room.getImageUrl().getThumbnail();
+        } else {
+            thumbnail = "room_default.png";
+        }
+
+        // 숫자 층수 => 문자 층수로 변환
+        Integer floor = room.getFloor();
+        String parsedFloor = "";
+        if (floor == -1) {
+            parsedFloor = "basement";
+        } else if (floor == 100) {
+            parsedFloor = "rooftop";
+        } else {
+            parsedFloor = String.valueOf(floor);
+        }
+
+        allRoomResponseDto.setRoomId(room.getId());
+        allRoomResponseDto.setThumbnail(thumbnail);
+        allRoomResponseDto.setType(room.getType());
+        allRoomResponseDto.setDeposit(room.getDeposit());
+        allRoomResponseDto.setRent(room.getRent());
+        allRoomResponseDto.setRoadAddress(room.getRoadAddress());
+        allRoomResponseDto.setFloor(parsedFloor);
+        allRoomResponseDto.setStartDate(room.getStartDate().toString());
+        allRoomResponseDto.setEndDate(room.getEndDate().toString());
+        allRoomResponseDto.setState(room.getState());
+        allRoomResponseDto.setLatitude(room.getLatitude());
+        allRoomResponseDto.setLongitude(room.getLongitude());
+
+        return allRoomResponseDto;
+    }
 }
