@@ -2,7 +2,11 @@ package com.gdsc.illuwabang.domain.room;
 
 import com.gdsc.illuwabang.domain.room.dto.RoomRegisterDto;
 import com.gdsc.illuwabang.domain.room.dto.AllRoomResponseDto;
+import com.gdsc.illuwabang.domain.room.dto.RoomSearchCriteria;
 import com.gdsc.illuwabang.domain.room.dto.SelectRoomResponseDto;
+import com.gdsc.illuwabang.domain.room.enums.State;
+import com.gdsc.illuwabang.domain.room.repository.RoomCustomRepository;
+import com.gdsc.illuwabang.domain.room.repository.RoomRepository;
 import com.gdsc.illuwabang.domain.user.User;
 import com.gdsc.illuwabang.domain.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -26,6 +30,9 @@ public class RoomService {
     RoomRepository roomRepository;
 
     @Autowired
+    RoomCustomRepository roomCustomRepository;
+
+    @Autowired
     UserRepository userRepository;
 
 
@@ -36,33 +43,8 @@ public class RoomService {
 
     public List<AllRoomResponseDto> getAllRooms() {
         return roomRepository.findAll().stream()
-                .map(this::convertToDto)
+                .map(AllRoomResponseDto::of)
                 .collect(Collectors.toList());
-    }
-
-    private AllRoomResponseDto convertToDto(Room room) {
-        AllRoomResponseDto allRoomResponseDto = new AllRoomResponseDto();
-
-        String thumbnail = "";
-        if (room.getImageUrl() != null) {
-            thumbnail = room.getImageUrl().getThumbnail();
-        } else {
-            thumbnail = "room_default.png";
-        }
-
-        allRoomResponseDto.setRoomId(room.getId());
-        allRoomResponseDto.setType(room.getType());
-        allRoomResponseDto.setDeposit(room.getDeposit());
-        allRoomResponseDto.setRent(room.getRent());
-        allRoomResponseDto.setRoadAddress(room.getRoadAddress());
-        allRoomResponseDto.setFloor(room.getFloor());
-        allRoomResponseDto.setStartDate(room.getStartDate().toString());
-        allRoomResponseDto.setEndDate(room.getEndDate().toString());
-        allRoomResponseDto.setState(room.getState());
-        allRoomResponseDto.setLatitude(room.getLatitude());
-        allRoomResponseDto.setLongitude(room.getLongitude());
-
-        return allRoomResponseDto;
     }
 
     public Room registerRoom(Long userId, RoomRegisterDto roomInfo) {
@@ -87,35 +69,7 @@ public class RoomService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + room.getUserId()));
 
         // RoomDto 생성 및 설정
-        SelectRoomResponseDto roomDto = new SelectRoomResponseDto();
-        roomDto.setRoomId(room.getId());
-        roomDto.setTitle(room.getTitle());
-        roomDto.setContent(room.getContent());
-        roomDto.setDeposit(room.getDeposit());
-        roomDto.setRent(room.getRent());
-        roomDto.setMaintenanceCost(room.getMaintenanceCost());
-        roomDto.setSize(room.getSize());
-        roomDto.setFloor(room.getFloor());
-        roomDto.setBuildingInfo(room.getBuildingInfo());
-        roomDto.setState(room.getState().toString());
-//        roomDto.setBookmarkNumber(room.getBookmarkNumber());
-        roomDto.setOptions(Arrays.asList(room.getOptions().split(",")));
-        roomDto.setRoadAddress(room.getRoadAddress());
-        roomDto.setLatitude(room.getLatitude());
-        roomDto.setLongitude(room.getLongitude());
-        //null check
-        if (room.getImageUrl() != null) {
-            roomDto.setImages(room.getImageUrl().getUrls());
-        } else {
-            roomDto.setImages(Collections.emptyList());
-        }
-
-        // TransferorInfo 설정
-        SelectRoomResponseDto.TransferorInfo transferorInfo = new SelectRoomResponseDto.TransferorInfo();
-        transferorInfo.setUserId(user.getId());
-        transferorInfo.setName(user.getName());
-        transferorInfo.setProfileImg(user.getImage());
-        roomDto.setTransferorInfo(transferorInfo);
+        SelectRoomResponseDto roomDto = SelectRoomResponseDto.of(room, user);
 
         return roomDto;
     }
@@ -123,6 +77,18 @@ public class RoomService {
     public Room updateRoomInfo(Long roomId, RoomRegisterDto inputRoomInfo) {
         Room originalRoom = roomRepository.findById(roomId)
                 .orElseThrow(() -> new EntityNotFoundException("Room not found with id: " + roomId));
+
+        //문자열 층수 => 숫자 층수로 변환
+        Integer parsedFloor = 0;
+        if (inputRoomInfo.getFloor() != null) {
+            if (inputRoomInfo.getFloor().equals("basement")) {
+                parsedFloor = -1;
+            } else if (inputRoomInfo.getFloor().equals("rooftop")) {
+                parsedFloor = 100;
+            } else {
+                parsedFloor = Integer.parseInt(inputRoomInfo.getFloor());
+            }
+        }
 
         Room newRoom = Room.builder()
                 .id(originalRoom.getId())
@@ -134,7 +100,7 @@ public class RoomService {
                 .rent(inputRoomInfo.getRent() == null ? originalRoom.getRent() : inputRoomInfo.getRent())
                 .maintenanceCost(inputRoomInfo.getMaintenanceCost() == null ? originalRoom.getMaintenanceCost() : inputRoomInfo.getMaintenanceCost())
                 .options(inputRoomInfo.getOptions() == null ? originalRoom.getOptions() : inputRoomInfo.getOptions())
-                .floor(inputRoomInfo.getFloor() == null ? originalRoom.getFloor() : inputRoomInfo.getFloor())
+                .floor(inputRoomInfo.getFloor() == null ? originalRoom.getFloor() : parsedFloor)
                 .buildingInfo(inputRoomInfo.getBuildingInfo() == null ? originalRoom.getBuildingInfo() : inputRoomInfo.getBuildingInfo())
                 .size(inputRoomInfo.getSize() == null ? originalRoom.getSize() : inputRoomInfo.getSize())
                 .imageUrl(inputRoomInfo.getImageUrl() == null ? originalRoom.getImageUrl() : inputRoomInfo.getImageUrl())
@@ -161,5 +127,14 @@ public class RoomService {
         Map<String, String> stringStringMap = new HashMap<>();
         stringStringMap.put("status", "success");
         return stringStringMap;
+    }
+
+    public List<AllRoomResponseDto> findRooms(RoomSearchCriteria criteria) {
+        List<Room> rooms = roomCustomRepository.findRooms(criteria);
+        List<AllRoomResponseDto> allRoomResponseDtos;
+        allRoomResponseDtos = rooms.stream()
+                .map(AllRoomResponseDto::of)
+                .collect(Collectors.toList());
+        return allRoomResponseDtos;
     }
 }

@@ -35,6 +35,16 @@ public class BookmarkedRoomDto {
     }
 
     public BookmarkedRoomDto of(Room room) {
+        //숫자층 => 문자 층
+        String floor = "";
+        if (room.getFloor() == -1) {
+            floor = "basement";
+        } else if (room.getFloor() == 100) {
+            floor = "rooftop";
+        } else {
+            floor = String.valueOf(room.getFloor());
+        }
+
         return BookmarkedRoomDto.builder()
                 .roomId(room.getId())
                 .thumbnail(room.getImageUrl() != null ? room.getImageUrl().getThumbnail() : null)
@@ -42,7 +52,7 @@ public class BookmarkedRoomDto {
                 .deposit(room.getDeposit())
                 .rent(room.getRent())
                 .location(room.getRoadAddress())
-                .floor(room.getFloor())
+                .floor(floor)
                 .startDate(room.getStartDate())
                 .endDate(room.getEndDate())
                 .build();
