@@ -24,3 +24,6 @@ logging:
     org.hibernate:
       SQL: debug
       type: trace
+locations:
+  file:
+    path: classpath:locations.json

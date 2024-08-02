@@ -4,8 +4,8 @@ spring:
       client:
         registration:
           kakao:
-            client-id: Kakao-client-id
-            client-secret: Kakao-client-secret
+            client-id: client_id
+            client-secret: client_secret
             redirect-uri: http://localhost:8080/api/login/oauth2/kakao
             client-authentication-method: post
             authorization-grant-type: authorization_code
@@ -15,8 +15,8 @@ spring:
               - account_email
             client-name: kakao
           google:
-            client-id: google-client-id
-            client-secret: google-client-secret
+            client-id: client_id
+            client-secret: client_secret
             redirect-uri: http://localhost:8080/api/login/oauth2/google
             client-authentication-method: post
             authorization-grant-type: authorization_code
@@ -36,6 +36,6 @@ spring:
             user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
             user-name-attribute: sub
 jwt:
-  secret: secret-key
+  secret: secret_key1
 refresh:
-  secret: secret-key2
+  secret: secret_key2

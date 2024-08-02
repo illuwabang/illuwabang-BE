@@ -33,6 +33,7 @@ public class UserService {
     }
 
     public Optional<User> findBySub(String sub){
+
         return Optional.ofNullable(userRepository.findBySub(sub));
     }
 }
