@@ -127,6 +127,7 @@ public class Room {
                 Double latitude, Double longitude, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.user = user;
         this.title = title;
+        this.userId = user;
         this.content = content;
         this.type = type;
         this.deposit = deposit;
