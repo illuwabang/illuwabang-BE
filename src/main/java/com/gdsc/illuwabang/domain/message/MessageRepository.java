@@ -11,12 +11,12 @@ import java.util.List;
 
 public interface MessageRepository extends JpaRepository<Message,Long> {
 
-    @Query("SELECT new com.gdsc.illuwabang.domain.message.MessageRoomDto(m.roomId.id, r.title, r.userId.id, r.userId.name, CASE WHEN r.userId = :user THEN 'host' ELSE 'guest' END ,"
-            + "r.userId.id, r.userId.name, m.content, (SELECT COUNT(m3)*1L FROM Message m3 WHERE m3.roomId = m.roomId AND m3.receiveId = :user AND m3.state = false), m.timestamp) " +
+    @Query("SELECT new com.gdsc.illuwabang.domain.message.MessageRoomDto(m.roomId.id, r.title, r.user.id, r.user.name, CASE WHEN r.user = :user THEN 'host' ELSE 'guest' END ,"
+            + "r.user.id, r.user.name, m.content, (SELECT COUNT(m3)*1L FROM Message m3 WHERE m3.roomId = m.roomId AND m3.receiveId = :user AND m3.state = false), m.timestamp) " +
             "FROM Message m " +
             "JOIN m.roomId r " +
             "WHERE (m.senderId = :user OR m.receiveId = :user) AND m.timestamp = (SELECT MAX(m2.timestamp) FROM Message m2 WHERE m2.roomId = m.roomId) " +
-            "GROUP BY m.roomId.id, r.title, r.userId.id, r.userId.name, r.userId.id, r.userId.name, m.content, m.timestamp")
+            "GROUP BY m.roomId.id, r.title, r.user.id, r.user.name, r.user.id, r.user.name, m.content, m.timestamp")
     List<MessageRoomDto> findAllMessageRoom(User user);
 
     @Query("SELECT new com.gdsc.illuwabang.domain.message.MessageDetailDto(m.id, m.senderId.id, m.receiveId.id, m.content, m.timestamp) " +

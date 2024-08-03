@@ -1,7 +1,7 @@
 package com.gdsc.illuwabang.domain.message;
 
 import com.gdsc.illuwabang.domain.room.Room;
-import com.gdsc.illuwabang.domain.room.RoomRepository;
+import com.gdsc.illuwabang.domain.room.repository.RoomRepository;
 import com.gdsc.illuwabang.domain.user.User;
 import com.gdsc.illuwabang.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class MessageService {
         Optional<Room> existRoom = roomRepository.findById(roomId);
         if(existRoom.isPresent()){
             Room room = existRoom.get();
-            Message message = new Message(sender, content, room, room.getUserId(), LocalDateTime.now());
+            Message message = new Message(sender, content, room, room.getUser(), LocalDateTime.now());
             System.out.println(message.getContent());
             messageRepository.save(message);
         }
