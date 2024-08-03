@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -30,10 +31,10 @@ public class RecentlyViews {
     private Room room;
 
     @Column
-    private LocalTime viewDate;
+    private LocalDateTime viewDate;
 
     @Builder
-    public RecentlyViews(User user, Room room, LocalTime viewDate) {
+    public RecentlyViews(User user, Room room, LocalDateTime viewDate) {
         this.user = user;
         this.room = room;
         this.viewDate = viewDate;

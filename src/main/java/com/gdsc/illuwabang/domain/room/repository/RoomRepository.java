@@ -1,4 +1,4 @@
-package com.gdsc.illuwabang.domain.room;
+package com.gdsc.illuwabang.domain.room.repository;
 
 import com.gdsc.illuwabang.domain.room.Room;
 import org.springframework.data.jpa.repository.JpaRepository;

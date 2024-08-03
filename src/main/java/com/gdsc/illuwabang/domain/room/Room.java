@@ -1,24 +1,18 @@
 package com.gdsc.illuwabang.domain.room;
 
+import com.gdsc.illuwabang.domain.room.enums.State;
+import com.gdsc.illuwabang.domain.room.enums.Type;
 import com.gdsc.illuwabang.domain.user.User;
-import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.Type;
 import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
-import java.time.LocalDateTime;
-import java.util.List;
 
 
 @Entity
-@Data
-@Table(name = "room")
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Room {
     @Id
@@ -28,7 +22,7 @@ public class Room {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User user;
 
     @Column
     private String title;
@@ -36,9 +30,9 @@ public class Room {
     @Column
     private String content;
 
-//    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     @Column
-    private String type;
+    private Type type;
 
     @Column
     private Integer deposit;
@@ -55,7 +49,7 @@ public class Room {
 
 //    @Enumerated(EnumType.STRING)
     @Column
-    private String floor;
+    private Integer floor;
 
     @Column
     private String buildingInfo;
@@ -73,11 +67,15 @@ public class Room {
     @Column
     private String detailAddress;
 
+    @Enumerated(EnumType.STRING)
     @Column
-    private Float latitude;
+    private State state;
 
     @Column
-    private Float longitude;
+    private Double latitude;
+
+    @Column
+    private Double longitude;
 
     @Column
     private LocalDateTime startDate;
@@ -92,7 +90,42 @@ public class Room {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Room(String title, User user, String content, String type, Integer deposit, Integer rent, Integer maintenanceCost, String options, String floor, String buildingInfo, Float size, ImageUrl imageUrl, String roadAddress, String detailAddress, Float latitude, Float longitude, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Room(Long id, User user, String title, String content, Type type,
+                Integer deposit, Integer rent, Integer maintenanceCost,
+                String options, Integer floor, String buildingInfo, Float size,
+                ImageUrl imageUrl, String roadAddress, String detailAddress, State state,
+                Double latitude, Double longitude, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.user = user;
+        this.title = title;
+        this.content = content;
+        this.type = type;
+        this.deposit = deposit;
+        this.rent = rent;
+        this.maintenanceCost = maintenanceCost;
+        this.options = options;
+        this.floor = floor;
+        this.buildingInfo = buildingInfo;
+        this.size = size;
+        this.imageUrl = imageUrl;
+        this.roadAddress = roadAddress;
+        this.detailAddress = detailAddress;
+        this.state = state;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    @Builder
+    public Room(User user, String title, String content, Type type,
+                Integer deposit, Integer rent, Integer maintenanceCost,
+                String options, Integer floor, String buildingInfo, Float size,
+                ImageUrl imageUrl, String roadAddress, String detailAddress, State state,
+                Double latitude, Double longitude, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.user = user;
         this.title = title;
         this.userId = user;
         this.content = content;
@@ -107,6 +140,7 @@ public class Room {
         this.imageUrl = imageUrl;
         this.roadAddress = roadAddress;
         this.detailAddress = detailAddress;
+        this.state = state;
         this.latitude = latitude;
         this.longitude = longitude;
         this.startDate = startDate;
