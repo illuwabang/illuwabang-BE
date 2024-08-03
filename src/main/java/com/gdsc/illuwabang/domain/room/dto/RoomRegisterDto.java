@@ -4,6 +4,7 @@ import com.gdsc.illuwabang.domain.room.ImageUrl;
 import com.gdsc.illuwabang.domain.room.Room;
 import com.gdsc.illuwabang.domain.room.enums.State;
 import com.gdsc.illuwabang.domain.room.enums.Type;
+import com.gdsc.illuwabang.domain.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 
 @Getter @Setter
 public class RoomRegisterDto {
-    private Long userId;
+    private User user;
     private String title;
     private String content;
     private Type type;
@@ -45,7 +46,7 @@ public class RoomRegisterDto {
         }
 
         return Room.builder()
-                .userId(userId)
+                .user(user)
                 .title(title)
                 .content(content)
                 .type(type)

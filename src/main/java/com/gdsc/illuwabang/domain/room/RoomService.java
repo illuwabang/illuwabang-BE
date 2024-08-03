@@ -1,9 +1,6 @@
 package com.gdsc.illuwabang.domain.room;
 
-import com.gdsc.illuwabang.domain.room.dto.RoomRegisterDto;
-import com.gdsc.illuwabang.domain.room.dto.AllRoomResponseDto;
-import com.gdsc.illuwabang.domain.room.dto.RoomSearchCriteria;
-import com.gdsc.illuwabang.domain.room.dto.SelectRoomResponseDto;
+import com.gdsc.illuwabang.domain.room.dto.*;
 import com.gdsc.illuwabang.domain.room.enums.State;
 import com.gdsc.illuwabang.domain.room.repository.RoomCustomRepository;
 import com.gdsc.illuwabang.domain.room.repository.RoomRepository;
@@ -47,8 +44,8 @@ public class RoomService {
                 .collect(Collectors.toList());
     }
 
-    public Room registerRoom(Long userId, RoomRegisterDto roomInfo) {
-        roomInfo.setUserId(userId);
+    public Room registerRoom(User user, RoomRegisterDto roomInfo) {
+        roomInfo.setUser(user);
         roomInfo.setCreatedAt(LocalDateTime.now());
         roomInfo.setState(State.AVAILABLE);
         //임시 좌표 //좌표 설정 필요
@@ -65,8 +62,7 @@ public class RoomService {
         Room room = roomRepository.findById(roomId)
                 .orElseThrow(() -> new EntityNotFoundException("Room not found with id: " + roomId));;
 
-        User user = userRepository.findById(room.getUserId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + room.getUserId()));
+        User user = room.getUser();
 
         // RoomDto 생성 및 설정
         SelectRoomResponseDto roomDto = SelectRoomResponseDto.of(room, user);
@@ -74,7 +70,7 @@ public class RoomService {
         return roomDto;
     }
 
-    public Room updateRoomInfo(Long roomId, RoomRegisterDto inputRoomInfo) {
+    public UpdatedRoomResponseDto updateRoomInfo(Long roomId, RoomRegisterDto inputRoomInfo) {
         Room originalRoom = roomRepository.findById(roomId)
                 .orElseThrow(() -> new EntityNotFoundException("Room not found with id: " + roomId));
 
@@ -92,7 +88,7 @@ public class RoomService {
 
         Room newRoom = Room.builder()
                 .id(originalRoom.getId())
-                .userId(originalRoom.getUserId())
+                .user(originalRoom.getUser())
                 .title(inputRoomInfo.getTitle() == null ? originalRoom.getTitle() : inputRoomInfo.getTitle())
                 .content(inputRoomInfo.getContent() == null ? originalRoom.getContent() : inputRoomInfo.getContent())
                 .type(inputRoomInfo.getType() == null ? originalRoom.getType() : inputRoomInfo.getType())
@@ -115,8 +111,12 @@ public class RoomService {
                 .updatedAt(LocalDateTime.now())
                 .build();
 
-        return roomRepository.save(newRoom);
+        Room savedRoom = roomRepository.save(newRoom);
+
+        return UpdatedRoomResponseDto.of(savedRoom);
     }
+
+
 
     public Map deleteRoom(Long roomId) {
         Room room = roomRepository.findById(roomId)

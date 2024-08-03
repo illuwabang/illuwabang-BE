@@ -2,6 +2,7 @@ package com.gdsc.illuwabang.domain.room;
 
 import com.gdsc.illuwabang.domain.room.enums.State;
 import com.gdsc.illuwabang.domain.room.enums.Type;
+import com.gdsc.illuwabang.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -12,7 +13,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name = "room")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Room {
     @Id
@@ -20,9 +20,9 @@ public class Room {
     @Column
     private Long id;
 
-    //foreign key
-    @Column
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column
     private String title;
@@ -90,13 +90,13 @@ public class Room {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Room(Long id, Long userId,String title, String content, Type type,
+    public Room(Long id, User user, String title, String content, Type type,
                 Integer deposit, Integer rent, Integer maintenanceCost,
                 String options, Integer floor, String buildingInfo, Float size,
                 ImageUrl imageUrl, String roadAddress, String detailAddress, State state,
                 Double latitude, Double longitude, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
-        this.userId = userId;
+        this.user = user;
         this.title = title;
         this.content = content;
         this.type = type;
@@ -120,12 +120,12 @@ public class Room {
     }
 
     @Builder
-    public Room(Long userId,String title, String content, Type type,
+    public Room(User user, String title, String content, Type type,
                 Integer deposit, Integer rent, Integer maintenanceCost,
                 String options, Integer floor, String buildingInfo, Float size,
                 ImageUrl imageUrl, String roadAddress, String detailAddress, State state,
                 Double latitude, Double longitude, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.userId = userId;
+        this.user = user;
         this.title = title;
         this.content = content;
         this.type = type;

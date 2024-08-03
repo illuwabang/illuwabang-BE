@@ -51,19 +51,21 @@ public class RoomIntegrationTest {
     private UserService userService;
 
 
+    User testUser;
+
     @BeforeEach
     public void setup() {
         roomRepository.deleteAll();
         userRepository.deleteAll();
 
         // 테스트 사용자 추가
-        User testUser = User.builder()
+        User user = User.builder()
                 .sub("1234")
                 .name("testUser")
                 .email("test@test2.com")
                 .provider(Provider.google)
                 .build();
-        userRepository.save(testUser);
+        testUser = userRepository.save(user);
     }
 
 
@@ -73,7 +75,7 @@ public class RoomIntegrationTest {
     public void testRegisterAndRetrieveRoom() throws Exception {
         // 방 등록
         RoomRegisterDto roomRegisterDto = new RoomRegisterDto();
-        roomRegisterDto.setUserId(1L);
+        roomRegisterDto.setUser(testUser);
         roomRegisterDto.setTitle("Test Room");
         roomRegisterDto.setContent("Test Content");
         roomRegisterDto.setType(Type.ONE_ROOM);
@@ -139,8 +141,8 @@ public class RoomIntegrationTest {
 
 
         roomRegisterDto = new RoomRegisterDto();
-        roomRegisterDto.setUserId(1L);
-        roomRegisterDto.setTitle("Change Room");
+        roomRegisterDto.setUser(testUser);
+        roomRegisterDto.setTitle("Changed Room");
         roomRegisterDto.setContent("Change Content");
         roomRegisterDto.setState(State.SOLD);
 
@@ -150,7 +152,7 @@ public class RoomIntegrationTest {
                         .content(objectMapper.writeValueAsString(roomRegisterDto))
                         .with(csrf()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title", is("Change Room")))
+                .andExpect(jsonPath("$.title", is("Changed Room")))
                 .andExpect(jsonPath("$.content", is("Change Content")))
                 .andExpect(jsonPath("$.state", is("SOLD")));
 

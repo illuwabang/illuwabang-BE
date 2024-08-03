@@ -62,12 +62,12 @@ public class BookmarkIntegrationTest {
                 .sub("test-user")
                 .name("Test User")
                 .build();
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
 
         Room room = Room.builder()
                 .title("Test Room")
                 .content("Test Content")
-                .userId(1L)
+                .user(savedUser)
                 .deposit(1000)
                 .floor(3)
                 .type(Type.ONE_ROOM)

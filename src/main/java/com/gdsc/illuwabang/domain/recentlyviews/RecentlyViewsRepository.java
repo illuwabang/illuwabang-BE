@@ -1,15 +1,17 @@
 package com.gdsc.illuwabang.domain.recentlyviews;
 
 import com.gdsc.illuwabang.domain.room.Room;
+import com.gdsc.illuwabang.domain.user.User;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 public interface RecentlyViewsRepository extends JpaRepository<RecentlyViews, Long> {
-
-    @Query(value = "SELECT * FROM recently_views WHERE user_id = ?1 ORDER BY view_date DESC LIMIT 10", nativeQuery = true)
-    List<RecentlyViews> find10ByUserId(Long userId);
+    @Query("SELECT rv FROM RecentlyViews rv WHERE rv.user = :user ORDER BY rv.viewDate DESC")
+    List<RecentlyViews> findTop10ByUser(@Param("user") User user, Pageable pageable);
 }

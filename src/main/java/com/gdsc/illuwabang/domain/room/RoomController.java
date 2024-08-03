@@ -1,10 +1,7 @@
 package com.gdsc.illuwabang.domain.room;
 
 import com.gdsc.illuwabang.domain.recentlyviews.RecentlyViewsService;
-import com.gdsc.illuwabang.domain.room.dto.AllRoomResponseDto;
-import com.gdsc.illuwabang.domain.room.dto.RoomRegisterDto;
-import com.gdsc.illuwabang.domain.room.dto.RoomSearchCriteria;
-import com.gdsc.illuwabang.domain.room.dto.SelectRoomResponseDto;
+import com.gdsc.illuwabang.domain.room.dto.*;
 import com.gdsc.illuwabang.domain.room.enums.Type;
 import com.gdsc.illuwabang.domain.user.User;
 import com.gdsc.illuwabang.domain.user.UserService;
@@ -70,16 +67,15 @@ public class RoomController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerRoom(Authentication authentication, @RequestBody RoomRegisterDto roomInfo) {
-        Long userId = 0L;
+        User user;
         Optional<User> exist_user = userService.findBySub(authentication.getName());
         if (exist_user.isPresent()) {
-            User user = exist_user.get();
-            userId = user.getId();
+            user = exist_user.get();
         } else {
             return ResponseEntity.badRequest().body("User not found");
         }
 
-        return ResponseEntity.ok().body(roomService.registerRoom(userId, roomInfo));
+        return ResponseEntity.ok().body(roomService.registerRoom(user, roomInfo));
     }
 
     @GetMapping("/{roomId}")
@@ -99,7 +95,7 @@ public class RoomController {
     }
 
     @PatchMapping("/{roomId}")
-    public ResponseEntity<Room> updateRoomInfo(@PathVariable Long roomId, @RequestBody RoomRegisterDto roomInfo) {
+    public ResponseEntity<UpdatedRoomResponseDto> updateRoomInfo(@PathVariable Long roomId, @RequestBody RoomRegisterDto roomInfo) {
         return ResponseEntity.ok().body(roomService.updateRoomInfo(roomId, roomInfo));
     }
 
