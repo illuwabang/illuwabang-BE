@@ -1,5 +1,6 @@
 package com.gdsc.illuwabang.domain.message;
 
+import com.gdsc.illuwabang.domain.room.enums.Type;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,11 +31,11 @@ public class OneMessageRoomDto {
     public static class RoomInfo {
         private Long roomId;
         private String thumbnail;
-        private String type;
+        private Type type;
         private Integer deposit;
         private Integer rent;
         private String location;
-        private String floor;
+        private Integer floor;
         private LocalDateTime startDate;
         private LocalDateTime endDate;
     }
