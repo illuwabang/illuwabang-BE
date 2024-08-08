@@ -1,7 +1,6 @@
 package com.gdsc.illuwabang.global.config;
 
 import com.gdsc.illuwabang.auth.jwt.JwtFilter;
-import com.gdsc.illuwabang.domain.user.UserRepository;
 import com.gdsc.illuwabang.domain.user.google.CustomOauth2AuthenticationSuccessHandler;
 import com.gdsc.illuwabang.domain.user.google.CustomOauth2UserService;
 import lombok.RequiredArgsConstructor;
@@ -14,10 +13,6 @@ import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationC
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequestEntityConverter;
-import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 

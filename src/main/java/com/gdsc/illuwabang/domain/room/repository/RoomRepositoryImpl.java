@@ -1,7 +1,6 @@
 package com.gdsc.illuwabang.domain.room.repository;
 
 import com.gdsc.illuwabang.domain.room.Room;
-import com.gdsc.illuwabang.domain.room.dto.AllRoomResponseDto;
 import com.gdsc.illuwabang.domain.room.dto.RoomSearchCriteria;
 import com.gdsc.illuwabang.domain.room.enums.FloorConstants;
 import com.querydsl.core.BooleanBuilder;

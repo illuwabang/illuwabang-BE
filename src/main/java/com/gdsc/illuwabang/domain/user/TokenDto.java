@@ -1,7 +1,6 @@
 package com.gdsc.illuwabang.domain.user;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
