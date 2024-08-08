@@ -3,7 +3,6 @@ package com.gdsc.illuwabang.domain.home;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gdsc.illuwabang.domain.recentlyviews.RecentlyViewsRepository;
 import com.gdsc.illuwabang.domain.recentlyviews.RecentlyViewsService;
-import com.gdsc.illuwabang.domain.recentlyviews.dto.RecentlyViewDto;
 import com.gdsc.illuwabang.domain.room.ImageUrl;
 import com.gdsc.illuwabang.domain.room.Room;
 import com.gdsc.illuwabang.domain.room.enums.State;
@@ -12,7 +11,6 @@ import com.gdsc.illuwabang.domain.room.repository.RoomRepository;
 import com.gdsc.illuwabang.domain.user.User;
 import com.gdsc.illuwabang.domain.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -22,13 +20,12 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Map;
 
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest

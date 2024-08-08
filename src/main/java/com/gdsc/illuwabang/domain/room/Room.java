@@ -1,6 +1,5 @@
 package com.gdsc.illuwabang.domain.room;
 
-import com.gdsc.illuwabang.domain.location.Location;
 import com.gdsc.illuwabang.domain.room.enums.State;
 import com.gdsc.illuwabang.domain.room.enums.Type;
 import com.gdsc.illuwabang.domain.user.User;

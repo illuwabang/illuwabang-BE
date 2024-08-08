@@ -3,7 +3,10 @@ package com.gdsc.illuwabang.domain.room.dto;
 import com.gdsc.illuwabang.domain.room.Room;
 import com.gdsc.illuwabang.domain.room.enums.State;
 import com.gdsc.illuwabang.domain.room.enums.Type;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
