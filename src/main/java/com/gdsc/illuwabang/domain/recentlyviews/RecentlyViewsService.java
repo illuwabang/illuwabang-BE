@@ -32,12 +32,12 @@ public class RecentlyViewsService {
         recentlyViewsRepository.save(recentlyViews);
     }
 
-    public List<RecentlyViewDto> getUsersRecentlyViews(User user) {
-        Pageable pageable = PageRequest.of(0, 10, Sort.by("viewDate").descending());
-        List<RecentlyViews> allByUserId = recentlyViewsRepository.findTop10ByUser(user,pageable);
-
-        return allByUserId.stream()
-                .map(RecentlyViewDto::of)
-                .toList();
-    }
+//    public List<RecentlyViewDto> getUsersRecentlyViews(User user) {
+//        Pageable pageable = PageRequest.of(0, 10, Sort.by("viewDate").descending());
+//        List<RecentlyViews> allByUserId = recentlyViewsRepository.findTop10ByUser(user,pageable);
+//
+//        return allByUserId.stream()
+//                .map(RecentlyViewDto::of)
+//                .toList();
+//    }
 }
