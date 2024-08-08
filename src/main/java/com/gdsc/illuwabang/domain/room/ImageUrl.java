@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
+@AllArgsConstructor @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ToString
 public class ImageUrl {
