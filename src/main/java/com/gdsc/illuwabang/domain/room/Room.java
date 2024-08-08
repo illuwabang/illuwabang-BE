@@ -1,5 +1,6 @@
 package com.gdsc.illuwabang.domain.room;
 
+import com.gdsc.illuwabang.domain.location.Location;
 import com.gdsc.illuwabang.domain.room.enums.State;
 import com.gdsc.illuwabang.domain.room.enums.Type;
 import com.gdsc.illuwabang.domain.user.User;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder @AllArgsConstructor
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -88,63 +90,4 @@ public class Room {
 
     @Column
     private LocalDateTime updatedAt;
-
-    @Builder
-    public Room(Long id, User user, String title, String content, Type type,
-                Integer deposit, Integer rent, Integer maintenanceCost,
-                String options, Integer floor, String buildingInfo, Float size,
-                ImageUrl imageUrl, String roadAddress, String detailAddress, State state,
-                Double latitude, Double longitude, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
-        this.user = user;
-        this.title = title;
-        this.content = content;
-        this.type = type;
-        this.deposit = deposit;
-        this.rent = rent;
-        this.maintenanceCost = maintenanceCost;
-        this.options = options;
-        this.floor = floor;
-        this.buildingInfo = buildingInfo;
-        this.size = size;
-        this.imageUrl = imageUrl;
-        this.roadAddress = roadAddress;
-        this.detailAddress = detailAddress;
-        this.state = state;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    @Builder
-    public Room(User user, String title, String content, Type type,
-                Integer deposit, Integer rent, Integer maintenanceCost,
-                String options, Integer floor, String buildingInfo, Float size,
-                ImageUrl imageUrl, String roadAddress, String detailAddress, State state,
-                Double latitude, Double longitude, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.user = user;
-        this.title = title;
-        this.content = content;
-        this.type = type;
-        this.deposit = deposit;
-        this.rent = rent;
-        this.maintenanceCost = maintenanceCost;
-        this.options = options;
-        this.floor = floor;
-        this.buildingInfo = buildingInfo;
-        this.size = size;
-        this.imageUrl = imageUrl;
-        this.roadAddress = roadAddress;
-        this.detailAddress = detailAddress;
-        this.state = state;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
 }
