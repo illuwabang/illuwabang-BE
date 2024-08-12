@@ -1,13 +1,10 @@
 package com.gdsc.illuwabang.domain.user.kakao;
 
 import com.gdsc.illuwabang.domain.user.Provider;
-import com.gdsc.illuwabang.domain.user.TokenDto;
 import com.gdsc.illuwabang.domain.user.User;
 import com.gdsc.illuwabang.domain.user.UserRepository;
-import io.netty.handler.codec.http.HttpHeaderValues;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;

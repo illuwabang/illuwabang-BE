@@ -1,6 +1,5 @@
 package com.gdsc.illuwabang.domain.user.google;
 
-import com.gdsc.illuwabang.domain.user.TokenDto;
 import com.gdsc.illuwabang.domain.user.User;
 import com.gdsc.illuwabang.domain.user.UserResponseDto;
 import lombok.Getter;

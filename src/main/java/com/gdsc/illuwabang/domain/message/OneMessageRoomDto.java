@@ -2,7 +2,6 @@ package com.gdsc.illuwabang.domain.message;
 
 import com.gdsc.illuwabang.domain.room.enums.Type;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

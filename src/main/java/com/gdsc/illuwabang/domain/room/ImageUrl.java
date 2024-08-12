@@ -5,12 +5,11 @@ import lombok.*;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
+@AllArgsConstructor @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ToString
 public class ImageUrl {
